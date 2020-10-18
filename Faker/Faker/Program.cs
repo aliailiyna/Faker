@@ -1,7 +1,8 @@
 ﻿using System;
+using FakerInterfaceLibrary;
 using FakerLibrary;
-using System.Linq;
-using System.Linq.Expressions;
+using DTOObjectsLibrary;
+using DTOAttributeLibrary;
 
 namespace ConsoleApplication
 {
@@ -9,8 +10,16 @@ namespace ConsoleApplication
     {
         static void Main(string[] args)
         {
-            Faker faker = new Faker();
-            Expression<Func<int, bool>> lambda = num => num < 5;
+            IFaker faker = new Faker();
+            ClassA a = faker.Create<ClassA>();
+            if (a == null)
+            {
+                Console.WriteLine("null");
+            }
+            else
+            {
+                Console.WriteLine(a.number.ToString());
+            }
             Console.WriteLine("Hello World!");
         }
     }

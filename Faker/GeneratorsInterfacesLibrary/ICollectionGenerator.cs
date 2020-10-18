@@ -7,7 +7,7 @@ namespace GeneratorsInterfacesLibrary
 {
     public interface ICollectionGenerator
     {
-        object GenetateCollection(Type elementType, IFaker faker);
+        object GenerateCollection(Type elementType, IFaker faker);
 
         Type GetCollectionType();
     }

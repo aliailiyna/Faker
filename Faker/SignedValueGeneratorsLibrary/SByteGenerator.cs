@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using GeneratorsInterfacesLibrary;
-using RandomGeneratorLibrary;
 
 namespace SignedValueGeneratorsLibrary
 {
     public class SByteGenerator : IGenerator
     {
-        public object GenetateObject()
+        private static Random random = new Random();
+        public object GenerateObject()
         {
             // генерация случайного числа от SByte.MinValue до SByte.MaxValue
-            return Convert.ToByte(RandomGenerator.random.Next(SByte.MinValue, SByte.MaxValue + 1));
+            return Convert.ToByte(random.Next(SByte.MinValue, SByte.MaxValue + 1));
         }
 
         public Type GetObjectType()

@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\FakerInterfaceLibrary\FakerInterfaceLibrary.csproj" />
     <ProjectReference Include="..\GeneratorsInterfacesLibrary\GeneratorsInterfacesLibrary.csproj" />
-    <ProjectReference Include="..\RandomGeneratorLibrary\RandomGeneratorLibrary.csproj" />
   </ItemGroup>
 
 </Project>

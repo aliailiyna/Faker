@@ -6,7 +6,7 @@ namespace GeneratorsInterfacesLibrary
 {
     public interface IGenerator
     {
-        object GenetateObject();
+        object GenerateObject();
 
         Type GetObjectType();
     }

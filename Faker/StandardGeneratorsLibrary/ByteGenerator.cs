@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using GeneratorsInterfacesLibrary;
-using RandomGeneratorLibrary;
 
 namespace StandardGeneratorsLibrary
 {
     class ByteGenerator : IGenerator
     {
-        public object GenetateObject()
+        private static Random random = new Random();
+        public object GenerateObject()
         {
             // генерация случайного числа от Byte.MinValue до Byte.MaxValue
-            return Convert.ToByte(RandomGenerator.random.Next(Byte.MinValue, Byte.MaxValue + 1));
+            return Convert.ToByte(random.Next(Byte.MinValue, Byte.MaxValue + 1));
         }
 
         public Type GetObjectType()

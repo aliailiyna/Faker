@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DTOObjectsLibrary\DTOObjectsLibrary.csproj" />
+    <ProjectReference Include="..\FakerInterfaceLibrary\FakerInterfaceLibrary.csproj" />
     <ProjectReference Include="..\FakerLibrary\FakerLibrary.csproj" />
   </ItemGroup>
 

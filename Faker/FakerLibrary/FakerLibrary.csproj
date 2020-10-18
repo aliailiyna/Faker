@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DTOAttributeLibrary\DTOAttributeLibrary.csproj" />
     <ProjectReference Include="..\FakerInterfaceLibrary\FakerInterfaceLibrary.csproj" />
     <ProjectReference Include="..\GeneratorsInterfacesLibrary\GeneratorsInterfacesLibrary.csproj" />
     <ProjectReference Include="..\PathNavigatorLibrary\PathNavigatorLibrary.csproj" />
