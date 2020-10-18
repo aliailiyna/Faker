@@ -14,6 +14,7 @@ namespace PathNavigatorLibrary
         private const string writeResultDirectoryAdd = @"\Result";
         private const string standardDirectoryAdd = @"\Standard\StandardGeneratorsLibrary.dll";
         private const string pluginsDirectoryAdd = @"\Plugins";
+        private const string PLUGIN_EXTENSION = "*.dll";
 
         static PathNavigator()
         {
@@ -46,6 +47,11 @@ namespace PathNavigatorLibrary
         public string GetPluginsDirectory()
         {
             return pluginsDirectory;
+        }
+
+        public string GetPluginExtension()
+        {
+            return PLUGIN_EXTENSION;
         }
     }
 }

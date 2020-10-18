@@ -5,9 +5,9 @@ using GeneratorsInterfacesLibrary;
 using RandomGeneratorLibrary;
 using FakerInterfaceLibrary;
 
-namespace StandardGeneratorsLibrary
+namespace StackGeneratorLibrary
 {
-    public class ListGenerator : ICollectionGenerator
+    public class StackGenerator : ICollectionGenerator
     {
         public object GenetateCollection(Type elementType, IFaker faker)
         {

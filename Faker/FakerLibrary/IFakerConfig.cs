@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FakerLibrary
 {
-    public interface IFaker
+    public interface IFakerConfig
     {
     }
 }

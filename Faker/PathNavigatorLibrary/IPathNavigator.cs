@@ -13,5 +13,7 @@ namespace PathNavigatorLibrary
         string GetStandardDirectory();
 
         string GetPluginsDirectory();
+
+        string GetPluginExtension();
     }
 }
