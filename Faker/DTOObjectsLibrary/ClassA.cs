@@ -10,10 +10,12 @@ namespace DTOObjectsLibrary
     public class ClassA
     {
         //public byte number;
-        public byte ConfigNumber { get; }
-        public ClassA(byte ConfigNumber)
-        {
-            this.ConfigNumber = ConfigNumber;
-        }
+
+        public List<string> configList;
+        //public byte ConfigNumber { get; }
+        //public ClassA(byte ConfigNumber)
+        //{
+            //this.ConfigNumber = ConfigNumber;
+        //}
     }
 }

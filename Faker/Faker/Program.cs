@@ -3,6 +3,7 @@ using FakerInterfaceLibrary;
 using FakerLibrary;
 using DTOObjectsLibrary;
 using ConfigGeneratorsLibrary;
+using System.Collections.Generic;
 
 namespace ConsoleApplication
 {
@@ -11,11 +12,16 @@ namespace ConsoleApplication
         static void Main(string[] args)
         {
             IFakerConfig fakerConfig = new FakerConfig();
-            fakerConfig.Add<ClassA, byte>(a => a.ConfigNumber, new NumberGenerator());
+            //fakerConfig.AddGenerator<ClassA, byte>(a => a.ConfigNumber, new NumberGenerator());
+            fakerConfig.AddCollectionGenerator<ClassA, List<string>>(a => a.configList, new StringListGenerator());
             IFaker faker = new Faker(fakerConfig);
+            //IFaker faker = new Faker();
             ClassA a = faker.Create<ClassA>();
-            Console.WriteLine(a.ConfigNumber.ToString());
+            if (a != null && a.configList != null)
+            foreach (var el in a.configList)
+            Console.WriteLine(el.ToString());
             Console.WriteLine("Hello World!");
+            Console.WriteLine((new StringListGenerator()).GetCollectionType().FullName);
         }
     }
 }

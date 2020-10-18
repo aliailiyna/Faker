@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -43,6 +44,16 @@ namespace FakerLibrary
                 }
                 configGeneratorsDictionary[generatorInfo.Item1].Add((generatorInfo.Item2, generatorInfo.Item3), generatorInfo.Item4);
             }
+
+            List<(Type, string, Type, ICollectionGenerator)> configCollectionGeneratorsList = fakerConfig.GetConfigCollectionGenerators();
+            foreach (var generatorInfo in configCollectionGeneratorsList)
+            {
+                if (!configCollectionGeneratorsDictionary.ContainsKey(generatorInfo.Item1))
+                {
+                    configCollectionGeneratorsDictionary.Add(generatorInfo.Item1, new Dictionary<(string, Type), ICollectionGenerator>());
+                }
+                configCollectionGeneratorsDictionary[generatorInfo.Item1].Add((generatorInfo.Item2, generatorInfo.Item3), generatorInfo.Item4);
+            }
         }
 
         public type Create<type>()
@@ -59,7 +70,9 @@ namespace FakerLibrary
         {
             object createdObject;
             if (IsConfigGenerator(classType, name, objectType))
-                createdObject = GenerateUsingUserGenerator(classType, name, objectType);
+                createdObject = GenerateConfigGenerator(classType, name, objectType);
+            else if (IsConfigCollectionGenerator(classType, name, objectType))
+                createdObject = GenerateConfigCollectionGenerator(classType, name, objectType);
             else if (IsStandardGenerator(objectType))
                 createdObject = GenerateStandard(objectType);
             else if (IsStandardCollectionGenerator(objectType))
@@ -78,31 +91,40 @@ namespace FakerLibrary
 
         private bool IsConfigGenerator(Type classType, string name, Type returnType)
         {
-            if (classType == typeof(byte) && name == "ConfigNumber")
-            {
-                Console.WriteLine("is");
-                if (configGeneratorsDictionary.ContainsKey(classType))
-                {
-                    if (configGeneratorsDictionary[classType].ContainsKey((name, returnType)))
-                    {
-
-                    }
-                }
-            }
-            else
-            {
-                if (classType != null)
-                Console.WriteLine("now " + classType.FullName.ToString() + " " + name);
-            }
             return classType != null && name != null &&
                 configGeneratorsDictionary.ContainsKey(classType) && configGeneratorsDictionary[classType].ContainsKey((name, returnType));
         }
 
-        private object GenerateUsingUserGenerator(Type classType, string memberName, Type returnType)
+        private object GenerateConfigGenerator(Type classType, string name, Type returnType)
         {
-            return configGeneratorsDictionary[classType][(memberName, returnType)].GenerateObject();
+            return configGeneratorsDictionary[classType][(name, returnType)].GenerateObject();
         }
 
+        private bool IsConfigCollectionGenerator(Type classType, string name, Type returnType)
+        {
+            if (classType != null && name != null)
+            {
+                return configCollectionGeneratorsDictionary.ContainsKey(classType) && configCollectionGeneratorsDictionary[classType].ContainsKey((name, returnType));
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private object GenerateConfigCollectionGenerator(Type classType, string name, Type returnType)
+        {
+            if (returnType.GetInterface(typeof(IList<>).Name) != null)
+            {
+                Type collectionType = returnType.GetGenericTypeDefinition();
+                Console.WriteLine("cat " + collectionType.FullName);
+                Type[] collectionArgs = returnType.GetGenericArguments();
+                Type fullCollectionType = collectionType.MakeGenericType(collectionArgs);
+                Console.WriteLine("cat " + collectionType.FullName);
+                return configCollectionGeneratorsDictionary[classType][(name, fullCollectionType)].GenerateCollection(null, this);
+            }
+            return false;
+        }
         private bool IsStandardGenerator(Type objectType)
         {
             return standardGeneratorsDictionary.ContainsKey(objectType);

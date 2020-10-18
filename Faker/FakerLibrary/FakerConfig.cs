@@ -12,7 +12,9 @@ namespace FakerLibrary
         private List<(Type, string, Type, IGenerator)> configGeneratorsList = 
             new List<(Type, string, Type, IGenerator)>();
 
-        public void Add<ParameterType, ResultType>(Expression<Func<ParameterType, ResultType>> fieldGetExpr, IGenerator generator)
+        private List<(Type, string, Type, ICollectionGenerator)> configCollectionGeneratorsList =
+            new List<(Type, string, Type, ICollectionGenerator)>();
+        public void AddGenerator<ParameterType, ResultType>(Expression<Func<ParameterType, ResultType>> fieldGetExpr, IGenerator generator)
         {
             MemberInfo classField = ParseFieldGetExpression(fieldGetExpr);
             if (classField != null && generator.GetObjectType().Equals(typeof(ResultType)))
@@ -25,6 +27,21 @@ namespace FakerLibrary
             }
         }
 
+        public void AddCollectionGenerator<ParameterType, ResultType>(Expression<Func<ParameterType, ResultType>> fieldGetExpr, ICollectionGenerator generator)
+        {
+            MemberInfo classField = ParseFieldGetExpression(fieldGetExpr);
+            if (classField != null && generator.GetCollectionType().Equals(typeof(ResultType)))
+            {
+                Console.WriteLine("success");
+                Console.WriteLine(typeof(ParameterType).ToString());
+                Console.WriteLine(classField.Name);
+                Console.WriteLine(typeof(ResultType).ToString());
+                if (!configCollectionGeneratorsList.Contains((typeof(ParameterType), classField.Name, typeof(ResultType), generator)))
+                {
+                    configCollectionGeneratorsList.Add((typeof(ParameterType), classField.Name, typeof(ResultType), generator));
+                }
+            }
+        }
         private MemberInfo ParseFieldGetExpression<ClassType, ResultType>(Expression<Func<ClassType, ResultType>> fieldGetExpr)
         {
             if ((fieldGetExpr.Body.NodeType == ExpressionType.MemberAccess))
@@ -41,6 +58,11 @@ namespace FakerLibrary
         public List<(Type, string, Type, IGenerator)> GetConfigGenerators()
         {
             return configGeneratorsList;
+        }
+
+        public List<(Type, string, Type, ICollectionGenerator)> GetConfigCollectionGenerators()
+        {
+            return configCollectionGeneratorsList;
         }
     }
 }
