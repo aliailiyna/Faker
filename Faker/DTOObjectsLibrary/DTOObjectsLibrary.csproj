@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Private.ServiceModel" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DTOAttributeLibrary\DTOAttributeLibrary.csproj" />
   </ItemGroup>
 

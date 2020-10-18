@@ -9,5 +9,6 @@ namespace DTOObjectsLibrary
     [ToUse]
     public class ClassI
     {
+        public ClassG classG;
     }
 }

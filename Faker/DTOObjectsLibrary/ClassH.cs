@@ -9,5 +9,7 @@ namespace DTOObjectsLibrary
     [ToUse]
     public class ClassH
     {
+        public ClassH classG;
+        public ClassI classI;
     }
 }

@@ -5,7 +5,10 @@ using DTOAttributeLibrary;
 
 namespace DTOObjectsLibrary
 {
-    class ClassG
+    [DTO]
+    [ToUse]
+    public class ClassG
     {
+        public ClassH classH;
     }
 }

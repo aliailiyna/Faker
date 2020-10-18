@@ -3,6 +3,7 @@ using FakerInterfaceLibrary;
 using FakerLibrary;
 using DTOObjectsLibrary;
 using DTOAttributeLibrary;
+using System.Collections.Generic;
 
 namespace ConsoleApplication
 {
@@ -12,15 +13,12 @@ namespace ConsoleApplication
         {
             IFaker faker = new Faker();
             //ClassA a = faker.Create<ClassA>();
-            //Console.WriteLine(a.number.ToString());
-            ClassF f = faker.Create<ClassF>();
-            if (f == null)
+            ClassC c = faker.Create<ClassC>();
+            Console.WriteLine(c.list.GetType().ToString());
+            Console.WriteLine(c.list.Count.ToString());
+            foreach (var el in c.list)
             {
-                Console.WriteLine("error");
-            }
-            else
-            {
-                Console.WriteLine(f.classA.number.ToString());
+                Console.WriteLine(el.ToString());
             }
             Console.WriteLine("Hello World!");
         }

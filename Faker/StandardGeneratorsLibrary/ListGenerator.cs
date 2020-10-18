@@ -18,7 +18,9 @@ namespace StandardGeneratorsLibrary
 
             int elementCount = random.Next(MIN_LENGTH, MAX_LENGTH + 1);
             for (int i = 0; i < elementCount; i++)
+            {
                 list.Add(faker.Create(elementType));
+            }
             return list;
         }
 

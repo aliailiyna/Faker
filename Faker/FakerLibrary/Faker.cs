@@ -17,6 +17,9 @@ namespace FakerLibrary
         private readonly Dictionary<Type, ICollectionGenerator> pluginCollectionGeneratorsDictionary;
         private readonly Dictionary<ConfigKey, IGenerator> configGeneratorsDictionary;
         private readonly Dictionary<ConfigKey, ICollectionGenerator> configCollectionGeneratorsDictionary;
+        // структура обрабатываемых типов, обеспечивающая разрешение 
+        // циклических зависимостей на любом уровне вложенности
+        private Queue<Type> processingDTOObjects = new Queue<Type>();
 
         private IFakerLoader fakerLoader = new FakerLoader();
         public Faker()
@@ -72,7 +75,7 @@ namespace FakerLibrary
 
         private bool IsStandardCollectionGenerator(Type objectType)
         {
-            if (objectType.GetInterface(typeof(ICollection<>).Name) != null)
+            if (objectType.GetInterface(typeof(IList<>).Name) != null)
             {
                 Type collectionType = objectType.GetGenericTypeDefinition();
                 return standardCollectionGeneratorsDictionary.ContainsKey(collectionType);
@@ -98,7 +101,7 @@ namespace FakerLibrary
 
         private bool IsPluginCollectionGenerator(Type objectType)
         {
-            if (objectType.GetInterface(typeof(ICollection<>).Name) != null)
+            if (objectType.GetInterface(typeof(IList<>).Name) != null)
             {
                 Type collectionType = objectType.GetGenericTypeDefinition();
                 return pluginCollectionGeneratorsDictionary.ContainsKey(collectionType);
@@ -120,6 +123,15 @@ namespace FakerLibrary
 
         private object GenerateDTO(Type objectType)
         {
+            // возвращение значения по умолчанию в случае если данный тип обрабатывается
+            if (processingDTOObjects.Contains(objectType))
+            {
+                return GenerateDefaultValue(objectType);
+            }
+
+            // добавление типа в очередь обрабатываемых типов
+            processingDTOObjects.Enqueue(objectType);
+
             object DTOObject = CreateObject(objectType);
 
             PropertyInfo[] properties = objectType.GetProperties().Where(property => property.GetSetMethod() != null).ToArray();
@@ -127,6 +139,9 @@ namespace FakerLibrary
 
             FieldInfo[] fields = objectType.GetFields();
             SetObjectFields(DTOObject, fields);
+
+            // извлечение типа из очереди обрабатываемых типов
+            processingDTOObjects.Dequeue();
 
             return DTOObject;
         }
