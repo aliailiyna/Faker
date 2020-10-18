@@ -6,9 +6,8 @@ using GeneratorsInterfacesLibrary;
 
 namespace StandardGeneratorsLibrary
 {
-    public class BoolGenerator : IGenerator
+    public class BoolGenerator : RandomGenerator, IGenerator
     {
-        private static Random random = new Random();
         public object GenerateObject()
         {
             // генерация случайного числа от 0 до 1

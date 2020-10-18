@@ -15,10 +15,6 @@ namespace FakerLibrary
         private Expression<Func<Type, bool>> lambdaGenerator = type => type.GetInterfaces().Contains(typeof(IGenerator)) && type.IsClass && !type.IsAbstract;
         private Expression<Func<Type, bool>> lambdaCollectionGenerator = type => type.GetInterfaces().Contains(typeof(ICollectionGenerator)) && type.IsClass && !type.IsAbstract;
         private IPathNavigator pathNavigator = new PathNavigator();
-        private List<Type> pluginGeneratorsTypesList;
-        private List<Type> pluginCollectionGeneratorsTypesList;
-        private List<Type> configGeneratorsTypesList;
-        private List<Type> configCollectionGeneratorsTypesList;
         private Dictionary<Type, IGenerator> standardGeneratorsDictionary = new Dictionary<Type, IGenerator>();
         private Dictionary<Type, ICollectionGenerator> standardCollectionGeneratorsDictionary = new Dictionary<Type, ICollectionGenerator>();
         private Dictionary<Type, IGenerator> pluginGeneratorsDictionary = new Dictionary<Type, IGenerator>();

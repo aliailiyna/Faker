@@ -11,14 +11,16 @@ namespace ConsoleApplication
         static void Main(string[] args)
         {
             IFaker faker = new Faker();
-            ClassA a = faker.Create<ClassA>();
-            if (a == null)
+            //ClassA a = faker.Create<ClassA>();
+            //Console.WriteLine(a.number.ToString());
+            ClassF f = faker.Create<ClassF>();
+            if (f == null)
             {
-                Console.WriteLine("null");
+                Console.WriteLine("error");
             }
             else
             {
-                Console.WriteLine(a.number.ToString());
+                Console.WriteLine(f.classA.number.ToString());
             }
             Console.WriteLine("Hello World!");
         }

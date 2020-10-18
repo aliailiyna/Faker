@@ -7,5 +7,7 @@ namespace FakerInterfaceLibrary
     public interface IFaker
     {
         public type Create<type>();
+
+        public object Create(Type objectType);
     }
 }

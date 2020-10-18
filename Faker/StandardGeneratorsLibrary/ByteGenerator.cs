@@ -5,9 +5,8 @@ using GeneratorsInterfacesLibrary;
 
 namespace StandardGeneratorsLibrary
 {
-    class ByteGenerator : IGenerator
+    class ByteGenerator : RandomGenerator, IGenerator
     {
-        private static Random random = new Random();
         public object GenerateObject()
         {
             // генерация случайного числа от Byte.MinValue до Byte.MaxValue

@@ -33,7 +33,12 @@ namespace FakerLibrary
 
         public type Create<type>()
         {
-            return (type)Create(typeof(type), null, null);
+            return (type)Create(typeof(type));
+        }
+
+        public object Create(Type objectType)
+        {
+            return Create(objectType, null, null);
         }
 
         private object Create(Type objectType, string name, Type propertyOrFieldType)
@@ -67,13 +72,19 @@ namespace FakerLibrary
 
         private bool IsStandardCollectionGenerator(Type objectType)
         {
-            return standardCollectionGeneratorsDictionary.ContainsKey(objectType);
+            if (objectType.GetInterface(typeof(ICollection<>).Name) != null)
+            {
+                Type collectionType = objectType.GetGenericTypeDefinition();
+                return standardCollectionGeneratorsDictionary.ContainsKey(collectionType);
+            }
+            return false;
         }
 
         private object GenerateCollectionStandard(Type objectType)
         {
+            Type collectionType = objectType.GetGenericTypeDefinition();
             Type elementType = objectType.GetGenericArguments()[0];
-            return standardCollectionGeneratorsDictionary[objectType].GenerateCollection(elementType, this);
+            return standardCollectionGeneratorsDictionary[collectionType].GenerateCollection(elementType, this);
         }
         private bool IsPluginGenerator(Type objectType)
         {
@@ -87,13 +98,19 @@ namespace FakerLibrary
 
         private bool IsPluginCollectionGenerator(Type objectType)
         {
-            return pluginCollectionGeneratorsDictionary.ContainsKey(objectType);
+            if (objectType.GetInterface(typeof(ICollection<>).Name) != null)
+            {
+                Type collectionType = objectType.GetGenericTypeDefinition();
+                return pluginCollectionGeneratorsDictionary.ContainsKey(collectionType);
+            }
+            return false;
         }
 
         private object GenerateCollectionPlugin(Type objectType)
         {
+            Type collectionType = objectType.GetGenericTypeDefinition();
             Type elementType = objectType.GetGenericArguments()[0];
-            return pluginCollectionGeneratorsDictionary[objectType].GenerateCollection(elementType, this);
+            return pluginCollectionGeneratorsDictionary[collectionType].GenerateCollection(elementType, this);
         }
 
         private bool IsDTO(Type objectType)
@@ -125,7 +142,9 @@ namespace FakerLibrary
         {
             ConstructorInfo[] constructors = objectType.GetConstructors();
             if (constructors.Length == 0)
+            {
                 constructors = objectType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic);
+            }
             return constructors;
         }
 
@@ -134,18 +153,6 @@ namespace FakerLibrary
             ConstructorInfo[] suitableConstructors = constructorInfos;
             return suitableConstructors.Aggregate((firstCI, secondCI) =>
                 firstCI.GetParameters().Length > secondCI.GetParameters().Length ? firstCI : secondCI);
-        }
-
-        private ConstructorInfo[] SelectConstructorsByFields(ConstructorInfo[] constructorInfos,
-                                Dictionary<(string, Type), IGenerator> generatorsForClass)
-        {
-            return constructorInfos.Where(constructorInfo =>
-            {
-                foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
-                    if (generatorsForClass.ContainsKey((parameterInfo.Name, parameterInfo.ParameterType)))
-                        return true;
-                return false;
-            }).ToArray();
         }
 
         private object InvokeConstructor(ConstructorInfo constructor)
