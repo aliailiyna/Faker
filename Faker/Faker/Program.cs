@@ -2,8 +2,7 @@
 using FakerInterfaceLibrary;
 using FakerLibrary;
 using DTOObjectsLibrary;
-using DTOAttributeLibrary;
-using System.Collections.Generic;
+using ConfigGeneratorsLibrary;
 
 namespace ConsoleApplication
 {
@@ -11,15 +10,11 @@ namespace ConsoleApplication
     {
         static void Main(string[] args)
         {
-            IFaker faker = new Faker();
-            //ClassA a = faker.Create<ClassA>();
-            ClassC c = faker.Create<ClassC>();
-            Console.WriteLine(c.list.GetType().ToString());
-            Console.WriteLine(c.list.Count.ToString());
-            foreach (var el in c.list)
-            {
-                Console.WriteLine(el.ToString());
-            }
+            IFakerConfig fakerConfig = new FakerConfig();
+            fakerConfig.Add<ClassA, byte>(a => a.ConfigNumber, new NumberGenerator());
+            IFaker faker = new Faker(fakerConfig);
+            ClassA a = faker.Create<ClassA>();
+            Console.WriteLine(a.ConfigNumber.ToString());
             Console.WriteLine("Hello World!");
         }
     }

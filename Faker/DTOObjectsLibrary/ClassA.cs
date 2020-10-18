@@ -9,6 +9,11 @@ namespace DTOObjectsLibrary
     [ToUse]
     public class ClassA
     {
-        public byte number;
+        //public byte number;
+        public byte ConfigNumber { get; }
+        public ClassA(byte ConfigNumber)
+        {
+            this.ConfigNumber = ConfigNumber;
+        }
     }
 }

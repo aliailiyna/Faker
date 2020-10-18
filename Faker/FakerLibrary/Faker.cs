@@ -15,8 +15,10 @@ namespace FakerLibrary
         private readonly Dictionary<Type, ICollectionGenerator> standardCollectionGeneratorsDictionary;
         private readonly Dictionary<Type, IGenerator> pluginGeneratorsDictionary;
         private readonly Dictionary<Type, ICollectionGenerator> pluginCollectionGeneratorsDictionary;
-        private readonly Dictionary<ConfigKey, IGenerator> configGeneratorsDictionary;
-        private readonly Dictionary<ConfigKey, ICollectionGenerator> configCollectionGeneratorsDictionary;
+        private readonly Dictionary<Type, Dictionary<(string, Type), IGenerator>> configGeneratorsDictionary =
+            new Dictionary<Type, Dictionary<(string, Type), IGenerator>>();
+        private readonly Dictionary<Type, Dictionary<(string, Type), ICollectionGenerator>> configCollectionGeneratorsDictionary =
+            new Dictionary<Type, Dictionary<(string, Type), ICollectionGenerator>>();
         // структура обрабатываемых типов, обеспечивающая разрешение 
         // циклических зависимостей на любом уровне вложенности
         private Queue<Type> processingDTOObjects = new Queue<Type>();
@@ -30,9 +32,18 @@ namespace FakerLibrary
             pluginCollectionGeneratorsDictionary = fakerLoader.getPluginCollectionGenerators();
         }
 
-        //public Faker(FakerConfig fakerConfig)
-        //{
-        //}
+        public Faker(IFakerConfig fakerConfig) : this()
+        {
+            List<(Type, string, Type, IGenerator)> configGeneratorsList = fakerConfig.GetConfigGenerators();
+            foreach (var generatorInfo in configGeneratorsList)
+            {
+                if (!configGeneratorsDictionary.ContainsKey(generatorInfo.Item1))
+                {
+                    configGeneratorsDictionary.Add(generatorInfo.Item1, new Dictionary<(string, Type), IGenerator>());
+                }
+                configGeneratorsDictionary[generatorInfo.Item1].Add((generatorInfo.Item2, generatorInfo.Item3), generatorInfo.Item4);
+            }
+        }
 
         public type Create<type>()
         {
@@ -44,10 +55,12 @@ namespace FakerLibrary
             return Create(objectType, null, null);
         }
 
-        private object Create(Type objectType, string name, Type propertyOrFieldType)
+        private object Create(Type objectType, string name, Type classType)
         {
             object createdObject;
-            if (IsStandardGenerator(objectType))
+            if (IsConfigGenerator(classType, name, objectType))
+                createdObject = GenerateUsingUserGenerator(classType, name, objectType);
+            else if (IsStandardGenerator(objectType))
                 createdObject = GenerateStandard(objectType);
             else if (IsStandardCollectionGenerator(objectType))
                 createdObject = GenerateCollectionStandard(objectType);
@@ -61,6 +74,33 @@ namespace FakerLibrary
                 createdObject = GenerateDefaultValue(objectType);
 
             return createdObject;
+        }
+
+        private bool IsConfigGenerator(Type classType, string name, Type returnType)
+        {
+            if (classType == typeof(byte) && name == "ConfigNumber")
+            {
+                Console.WriteLine("is");
+                if (configGeneratorsDictionary.ContainsKey(classType))
+                {
+                    if (configGeneratorsDictionary[classType].ContainsKey((name, returnType)))
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+                if (classType != null)
+                Console.WriteLine("now " + classType.FullName.ToString() + " " + name);
+            }
+            return classType != null && name != null &&
+                configGeneratorsDictionary.ContainsKey(classType) && configGeneratorsDictionary[classType].ContainsKey((name, returnType));
+        }
+
+        private object GenerateUsingUserGenerator(Type classType, string memberName, Type returnType)
+        {
+            return configGeneratorsDictionary[classType][(memberName, returnType)].GenerateObject();
         }
 
         private bool IsStandardGenerator(Type objectType)

@@ -15,8 +15,5 @@ namespace FakerLibrary
 
         public Dictionary<Type, ICollectionGenerator> getPluginCollectionGenerators();
 
-        public Dictionary<ConfigKey, IGenerator> getConfigGenerators(IFakerConfig fakerConfig);
-
-        public Dictionary<ConfigKey, ICollectionGenerator> getConfigCollectionGenerators(IFakerConfig fakerConfig);
     }
 }

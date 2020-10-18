@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConfigGeneratorsLibrary\ConfigGeneratorsLibrary.csproj" />
     <ProjectReference Include="..\DTOObjectsLibrary\DTOObjectsLibrary.csproj" />
     <ProjectReference Include="..\FakerInterfaceLibrary\FakerInterfaceLibrary.csproj" />
     <ProjectReference Include="..\FakerLibrary\FakerLibrary.csproj" />

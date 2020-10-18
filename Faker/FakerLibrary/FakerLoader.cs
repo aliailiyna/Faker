@@ -19,8 +19,6 @@ namespace FakerLibrary
         private Dictionary<Type, ICollectionGenerator> standardCollectionGeneratorsDictionary = new Dictionary<Type, ICollectionGenerator>();
         private Dictionary<Type, IGenerator> pluginGeneratorsDictionary = new Dictionary<Type, IGenerator>();
         private Dictionary<Type, ICollectionGenerator> pluginCollectionGeneratorsDictionary = new Dictionary<Type, ICollectionGenerator>();
-        private Dictionary<ConfigKey, IGenerator> configGeneratorsDictionary = new Dictionary<ConfigKey, IGenerator>();
-        private Dictionary<ConfigKey, ICollectionGenerator> configCollectionGeneratorsDictionary = new Dictionary<ConfigKey, ICollectionGenerator>();
 
         public FakerLoader()
         {
@@ -117,16 +115,6 @@ namespace FakerLibrary
         public Dictionary<Type, ICollectionGenerator> getPluginCollectionGenerators()
         {
             return pluginCollectionGeneratorsDictionary;
-        }
-
-        public Dictionary<ConfigKey, IGenerator> getConfigGenerators(IFakerConfig fakerConfig)
-        {
-            return configGeneratorsDictionary;
-        }
-
-        public Dictionary<ConfigKey, ICollectionGenerator> getConfigCollectionGenerators(IFakerConfig fakerConfig)
-        {
-            return configCollectionGeneratorsDictionary;
         }
     }
 }
