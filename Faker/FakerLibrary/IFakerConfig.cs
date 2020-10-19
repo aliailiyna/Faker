@@ -14,7 +14,7 @@ namespace FakerLibrary
         public void AddCollectionGenerator<ParameterType, ResultType>(Expression<Func<ParameterType, ResultType>>
             fieldGetExpr, ICollectionGenerator generator);
 
-        public List<(Type, string, Type, IGenerator)> GetConfigGenerators();
-        public List<(Type, string, Type, ICollectionGenerator)> GetConfigCollectionGenerators();
+        public Dictionary<Type, Dictionary<(string, Type), IGenerator>> GetConfigGenerators();
+        public Dictionary<Type, Dictionary<(string, Type), ICollectionGenerator>> GetConfigCollectionGenerators();
     }
 }

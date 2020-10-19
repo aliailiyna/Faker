@@ -16,6 +16,7 @@ namespace PathNavigatorLibrary
         private const string pluginsDirectoryAdd = @"\Plugins";
         private const string PLUGIN_EXTENSION = "*.dll";
 
+        // нахождение путей
         static PathNavigator()
         {
             string path = Directory.GetCurrentDirectory();
@@ -28,27 +29,32 @@ namespace PathNavigatorLibrary
             standardDirectory = String.Concat(rootDirectory, standardDirectoryAdd);
             pluginsDirectory = String.Concat(rootDirectory, pluginsDirectoryAdd);
         }
+
+        // получение путя к папке с проектом
         public string GetRootDirectory()
         {
             return rootDirectory;
         }
 
+        // получение путя к папке для записи результатов
         public string GetWriteResultDirectory()
         {
             return writeResultDirectory;
         }
 
+        // получение путя к папке со стандартными генераторами
         public string GetStandardDirectory()
         {
             return standardDirectory;
         }
 
-
+        // получение путя к папке с плагинами
         public string GetPluginsDirectory()
         {
             return pluginsDirectory;
         }
 
+        // получение шаблона расширения плагинов
         public string GetPluginExtension()
         {
             return PLUGIN_EXTENSION;

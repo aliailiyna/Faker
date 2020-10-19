@@ -6,7 +6,6 @@ using DTOAttributeLibrary;
 namespace DTOObjectsLibrary
 {
     [DTO]
-    [ToUse]
     public class ClassC
     {
         public List<byte> list;

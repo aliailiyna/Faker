@@ -1,0 +1,12 @@
+{
+  "classA": {
+    "configList": [
+      "cat",
+      "cat",
+      "cat",
+      "cat",
+      "cat"
+    ],
+    "ConfigNumber": 3
+  }
+}

@@ -7,41 +7,81 @@ using System.Collections.Generic;
 using WritingLibrary;
 using SerializationLibrary;
 using PathNavigatorLibrary;
+using System.Reflection;
+using System.Linq;
 
 namespace ConsoleApplication
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
-        {
-            IFakerConfig fakerConfig = new FakerConfig();
-            //fakerConfig.AddGenerator<ClassA, byte>(a => a.ConfigNumber, new NumberGenerator());
-            fakerConfig.AddCollectionGenerator<ClassA, List<string>>(a => a.configList, new StringListGenerator());
-            IFaker faker = new Faker(fakerConfig);
-            //IFaker faker = new Faker();
-            ClassA a = faker.Create<ClassA>();
+        // список созданных объектов
+        private static List<object> objectList = new List<object>();
 
+        // создание объектов
+        private static void CreateObjects(IFaker faker)
+        {
+            ClassA a = faker.Create<ClassA>();
+            objectList.Add(a);
+            ClassB b = faker.Create<ClassB>();
+            objectList.Add(b);
+            ClassC c = faker.Create<ClassC>();
+            objectList.Add(c);
+            ClassD d = faker.Create<ClassD>();
+            objectList.Add(d);
+            ClassE e = faker.Create<ClassE>();
+            objectList.Add(e);
+            ClassF f = faker.Create<ClassF>();
+            objectList.Add(f);
+            ClassG g = faker.Create<ClassG>();
+            objectList.Add(g);
+            ClassH h = faker.Create<ClassH>();
+            objectList.Add(h);
+            ClassI i = faker.Create<ClassI>();
+            objectList.Add(i);
+        }
+
+        private static void OutputObjects()
+        {
+            // создание писателей
             IWriter consoleWriter = new ConsoleWriter();
             IWriter fileWriter = new FileWriter();
 
+            // создание сериализатора
             ISerializer jsonSerializer = new JsonSerializer();
-
-
-            string strJson = jsonSerializer.Serialize(a);
+            // получение имени сериализатора
             string strNameJson = jsonSerializer.GetName();
 
-            fileWriter.Write(strJson, a.GetType().Name + "." + strNameJson);
-            consoleWriter.Write(strJson, a.GetType().Name + "." + strNameJson);
+            foreach (object obj in objectList)
+            {
+                // получение сериализованных объектов
+                string strJson = jsonSerializer.Serialize(obj);
 
-            Console.WriteLine();
-            foreach (var el in a.configList)
-            Console.WriteLine(el.ToString());
-            Console.WriteLine("Hello World!");
-            Console.WriteLine((new StringListGenerator()).GetCollectionType().FullName);
+                // вывод в файлы
+                fileWriter.Write(strJson, obj.GetType().Name + "." + strNameJson);
 
-            PathNavigator pathNavigator = new PathNavigator();
-            string path = pathNavigator.GetWriteResultDirectory();
-            Console.WriteLine(path + @"\" + a.GetType().Name + "." + strNameJson);
+                // вывод в консоль
+                Console.WriteLine();
+                consoleWriter.Write(strJson, obj.GetType().Name + "." + strNameJson);
+            }
+        }
+
+        public static void Main(string[] args)
+        {
+            // Настройка генерируемых случайных значений для конкретного поля 
+            // путем передачи собственного генератора для конкретного поля/свойства
+            IFakerConfig fakerConfig = new FakerConfig();
+            fakerConfig.AddGenerator<ClassA, byte>(a => a.ConfigNumber, new NumberGenerator());
+            fakerConfig.AddCollectionGenerator<ClassA, List<string>>(a => a.configList, new StringListGenerator());
+            IFaker faker = new Faker(fakerConfig);
+
+            // создание объектов
+            CreateObjects(faker);
+
+            // вывод объектов
+            OutputObjects();
+
+            // ожидание ввода
+            Console.ReadLine();
         }
     }
 }
