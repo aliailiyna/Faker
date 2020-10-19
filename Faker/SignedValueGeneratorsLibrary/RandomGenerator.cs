@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StandardGeneratorsLibrary
+namespace SignedValueGeneratorsLibrary
 {
     public abstract class RandomGenerator
     {

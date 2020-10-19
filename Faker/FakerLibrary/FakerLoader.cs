@@ -39,6 +39,8 @@ namespace FakerLibrary
         {
             Assembly standardGeneratorsAssembly = Assembly.LoadFile(pathNavigator.GetStandardDirectory());
 
+            Console.WriteLine("Стандартные генераторы");
+
             // IGenerator
             Type[] standardGeneratorsTypes = standardGeneratorsAssembly.GetTypes().Where(lambdaGenerator.Compile()).ToArray();
             IGenerator generator;
@@ -73,6 +75,7 @@ namespace FakerLibrary
 
             string[] pluginFiles = Directory.GetFiles(pluginsPath, pathNavigator.GetPluginExtension());
 
+            Console.WriteLine("Генераторы из плагинов");
             foreach (var file in pluginFiles)
             {
                 Assembly asm = Assembly.LoadFile(file);

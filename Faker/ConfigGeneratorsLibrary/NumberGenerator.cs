@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GeneratorsInterfacesLibrary;
 
 namespace ConfigGeneratorsLibrary
 {
-    public class NumberGenerator : IGenerator
+    public class NumberGenerator : RandomGenerator, IGenerator
     {
-        private static Random random = new Random();
         public object GenerateObject()
         {
-            // генерация случайного числа от 1 до 5
-            return Convert.ToByte(random.Next(1, 6));
+            // генерация случайного числа от 1 до 2
+            return Convert.ToByte(random.Next(1, 3));
         }
 
         public Type GetObjectType()

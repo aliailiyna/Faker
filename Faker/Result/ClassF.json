@@ -1,12 +1,20 @@
 {
-  "classA": {
-    "configList": [
-      "cat",
-      "cat",
-      "cat",
-      "cat",
-      "cat"
-    ],
-    "ConfigNumber": 3
+  "Number1": 18,
+  "Number2": 30,
+  "Number3": 98,
+  "Number4": 131,
+  "G": {
+    "f": null,
+    "h": {
+      "classI": {
+        "classG": null,
+        "Number1": 2
+      },
+      "Number1": 207
+    },
+    "Number1": 107,
+    "Number2": 13,
+    "Number3": 96,
+    "Number4": 108
   }
 }

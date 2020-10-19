@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GeneratorsInterfacesLibrary;
 
 namespace StandardGeneratorsLibrary
 {
-    class ByteGenerator : RandomGenerator, IGenerator
+    public class ByteGenerator : RandomGenerator, IGenerator
     {
         public object GenerateObject()
         {

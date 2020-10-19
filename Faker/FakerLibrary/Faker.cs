@@ -32,12 +32,10 @@ namespace FakerLibrary
         public Faker()
         {
             // загрузка стандартных генераторов
-            Console.WriteLine("Стандартные генераторы");
             standardGeneratorsDictionary = fakerLoader.getStandardGenerators();
             standardCollectionGeneratorsDictionary = fakerLoader.getStandardCollectionGenerators();
 
             // загрузка генераторов из 
-            Console.WriteLine("Генераторы из плагинов");
             pluginGeneratorsDictionary = fakerLoader.getPluginGenerators();
             pluginCollectionGeneratorsDictionary = fakerLoader.getPluginCollectionGenerators();
         }

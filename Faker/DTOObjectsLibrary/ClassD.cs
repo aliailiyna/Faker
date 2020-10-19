@@ -8,11 +8,14 @@ namespace DTOObjectsLibrary
     [DTO]
     public class ClassD
     {
+        public string russianString;
+        public string numberString;
         public byte Number1 { get; }
         public byte Number2 { get; }
         public byte Number3 { get; }
         public byte Number4 { get; }
 
+        // some private constructors
         private ClassD(byte number1)
         {
             Number1 = number1;

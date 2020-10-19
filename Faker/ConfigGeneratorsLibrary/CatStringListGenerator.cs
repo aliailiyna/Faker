@@ -2,30 +2,28 @@
 using System.Collections.Generic;
 using GeneratorsInterfacesLibrary;
 using FakerInterfaceLibrary;
-using System.Collections;
 
-namespace StandardGeneratorsLibrary
+namespace ConfigGeneratorsLibrary
 {
-    public class ListGenerator : RandomGenerator, ICollectionGenerator
+    public class CatStringListGenerator : RandomGenerator, ICollectionGenerator
     {
         private const int MIN_LENGTH = 0;
         private const int MAX_LENGTH = 10;
         public object GenerateCollection(Type elementType, IFaker faker)
         {
-            Type genericListType = typeof(List<>).MakeGenericType(elementType);
-            IList list = (IList)Activator.CreateInstance(genericListType);
+            List<string> list = new List<string>();
 
             int elementCount = random.Next(MIN_LENGTH, MAX_LENGTH + 1);
             for (int i = 0; i < elementCount; i++)
             {
-                list.Add(faker.Create(elementType));
+                list.Add("cat");
             }
             return list;
         }
 
         public Type GetCollectionType()
         {
-            return typeof(List<>);
+            return typeof(List<string>);
         }
     }
 }

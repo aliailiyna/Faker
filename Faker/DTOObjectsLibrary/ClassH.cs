@@ -8,7 +8,10 @@ namespace DTOObjectsLibrary
     [DTO]
     public class ClassH
     {
-        public ClassH classG;
+        // standard
+        public byte Number1 { set; get; }
+
+        // cyclical links
         public ClassI classI;
     }
 }

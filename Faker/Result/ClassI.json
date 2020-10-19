@@ -1,8 +1,23 @@
 {
   "classG": {
-    "classH": {
-      "classG": null,
-      "classI": null
-    }
-  }
+    "f": {
+      "Number1": 246,
+      "Number2": 61,
+      "Number3": 25,
+      "Number4": 184,
+      "G": null
+    },
+    "h": {
+      "classI": {
+        "classG": null,
+        "Number1": 104
+      },
+      "Number1": 181
+    },
+    "Number1": 243,
+    "Number2": 159,
+    "Number3": 103,
+    "Number4": 196
+  },
+  "Number1": 11
 }

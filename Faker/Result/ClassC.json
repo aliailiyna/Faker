@@ -1,11 +1,15 @@
 {
-  "list": [
-    167,
-    208,
-    14,
-    7,
-    102,
-    74,
-    197
-  ]
+  "listBool": [
+    false
+  ],
+  "uShort": 5787,
+  "stringFirst": "tcwERBLoA",
+  "stringSecond": "ZMAnY i",
+  "ListByte": [
+    21,
+    61,
+    143
+  ],
+  "UInt": 4056373926,
+  "ULong": 1843134450
 }
