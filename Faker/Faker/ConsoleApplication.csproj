@@ -10,6 +10,8 @@
     <ProjectReference Include="..\DTOObjectsLibrary\DTOObjectsLibrary.csproj" />
     <ProjectReference Include="..\FakerInterfaceLibrary\FakerInterfaceLibrary.csproj" />
     <ProjectReference Include="..\FakerLibrary\FakerLibrary.csproj" />
+    <ProjectReference Include="..\SerializationLibrary\SerializationLibrary.csproj" />
+    <ProjectReference Include="..\WritingLibrary\WritingLibrary.csproj" />
   </ItemGroup>
 
 </Project>
